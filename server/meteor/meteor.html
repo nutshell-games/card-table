@@ -1,14 +1,26 @@
 <head>
-  <title>meteor</title>
+  <title>Astral Server</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
+  {{>loginButtons}}
+  
+  <h1>Debug Window</h1>
+
+  <div class="well">
+    Clients connected:
+  </div>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="clientSummary">
+  Client:
+</template>
+
+<template name="screenSummary">
+  Screen:
+</template>
+
+<template name="sceneSummary">
+  Scene:
 </template>

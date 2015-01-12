@@ -1,4 +1,4 @@
-// Generated on 2015-01-05 using generator-ionic 0.6.1
+// Generated on 2015-01-07 using generator-ionic 0.6.1
 'use strict';
 
 var _ = require('lodash');
@@ -66,8 +66,9 @@ module.exports = function (grunt) {
         tasks: ['newer:copy:app']
       },
       js: {
-        files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js','<%= yeoman.app %>/lib/prizm-client/**/*.js'],
-        //tasks: ['newer:copy:app', 'newer:jshint:all'] // JSHint too strict for AngularJS code
+        //files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js'],
+        //tasks: ['newer:copy:app', 'newer:jshint:all']
+        files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js','<%= yeoman.app %>/lib/prizm-client/package.js','<%= yeoman.app %>/lib/**/*.js'],
         tasks: ['newer:copy:app']
       },
       compass: {

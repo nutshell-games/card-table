@@ -2,6 +2,78 @@ card-table
 ==========
 
 
+Development Environment:
+
+- open client project
+- open server sdk project
+- open client sdk project
+
+- Start Meteor server
+- open server debug window
+
+- start desktop client:
+  grunt serve
+- 
+
+
+Flow
+====
+--- SETUP ---
+Desktop:
+- ANNOUNCER: Login with Google
+- ANNOUNCER: show lobby: session options
+- ANNOUNCER: launch session
+- ANNOUNCER: Launch Board Screen
+- BOARD: Launch game world
+- BOARD: Bind to SmartTouch stream
+- ANNOUNCER: Create new session (open to any # of players)
+- ANNOUNCER: show hotkey info
+- ANNOUNCER: Show session info, Wait for players to join on device
+
+Mobile PRIVATE:
+- Login with Google
+- Show lobby
+- Select open session 
+- Join session 
+- Launch game world
+- show overlay: Prompt to select position at table 
+
+Desktop:
+- BOARD: Show overlay for selecting player position 
+- BOARD: Set [player position: active edge + hotspot to Mobile PRIVATE] from SmartTouch
+- BOARD: Hide overlay, return to default game world
+- ANNOUNCER: Show connected players
+
+Mobile PRIVATE:
+- Set [active edge + hotspot to Desktop BOARD]
+
+
+--- GAME PLAY ---
+...
+
+
+--- PLAYER LEAVES ABRUPTLY---
+Mobile PRIVATE:
+- Player leaves app
+
+SERVER:
+- on Mobile client disconnect, notify Host (Desktop)
+- clear live data objects related to player (client, screen, nodes, etc.)
+
+Desktop:
+- ANNOUNCER: show player left session
+- BOARD: remove player position[active edge + hotspot]
+
+
+--- HOST LEAVES GRACEFULLY ---
+- ANNOUNCER: exit session via hotkey-
+- BOARD: transition to lobby scene
+- ANNOUNCER: transition to lobby
+
+Mobile: 
+- transition to lobby
+
+
 Server
 ======
 - log in user

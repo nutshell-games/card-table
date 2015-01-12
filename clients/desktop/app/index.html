@@ -18,6 +18,11 @@
   </head>
 
   <body ng-app="HoloDeck">
+    <ion-nav-bar class="nav-title-slide-ios7 bar-light">
+      <ion-nav-back-button class="button-icon ion-arrow-left-c">
+      </ion-nav-back-button>
+    </ion-nav-bar>
+
     <ion-nav-view></ion-nav-view>
 
     <!-- build:js scripts/vendor.js -->
@@ -33,23 +38,30 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- not managed by wiredep, since local, linked bower package -->
-    <script src="lib/prizm-client/bower_components/sockjs-client/dist/sockjs.js"></script>
-    <script src="lib/prizm-client/bower_components/ddp.js/src/ddp.js"></script>
-    <script src="lib/prizm-client/bower_components/q/q.js"></script>
-    <script src="lib/prizm-client/bower_components/asteroid/dist/asteroid.browser.js"></script>
-    <script src="lib/prizm-client/package.js"></script>
-
-
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
+    <!-- local: not managed by wiredep, since local, linked bower package -->
+    <!-- local prizm-client -->
+    <script src="lib/store/dist/store2.js"></script>
+    <script src="lib/sockjs-client/dist/sockjs.js"></script>
+    <script src="lib/ddp.js/src/ddp.js"></script>
+    <script src="lib/q/q.js"></script>
+    <script src="lib/asteroid/dist/asteroid.browser.js"></script>
+    <script src="lib/asteroid/dist/plugins/google-login.js"></script>
+    <script src="lib/asteroid/dist/plugins/facebook-login.js"></script>
+    <script src="lib/prizm-client/json.js"></script>
+    <script src="lib/prizm-client/package.js"></script>
+    <!-- end local -->
+    <!-- local prizm-client -->
+    <script src="lib/prizm-js-toolkit/package.js"></script>
+    <!-- end local -->
 
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/config.js"></script>
-        <script src="scripts/prizm.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers.js"></script>
+        <script src="scripts/astral.js"></script>
         <!-- endbuild -->
 </body>
 </html>
