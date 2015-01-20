@@ -3,6 +3,10 @@ angular.module('HoloDeck.controllers', [])
 
 .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
  
+  $scope.startGame = function(){
+    GameWorld.render($('#gameView').get(0));
+  }
+
   // Called to navigate to the main app
   $scope.startApp = function() {
     $state.go('login');

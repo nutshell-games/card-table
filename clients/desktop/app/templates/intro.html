@@ -22,6 +22,16 @@
   </ion-nav-buttons>
 
   <ion-slide-box on-slide-changed="slideChanged(index)">
+
+    <ion-slide>
+      <button class="button button-positive button-clear no-animation"
+      ng-click="startGame()" >
+      Start game
+    </button>
+      <div id="gameView">
+      </div>
+    </ion-slide>
+
     <ion-slide>
       <h3>Thank you for choosing the Awesome App!</h3>
       <div id="logo">
