@@ -6,7 +6,7 @@
 
 meteor-platform
 insecure
-prizm:synaptic-server
+prizm:astral-server
 accounts-facebook
 accounts-password
 accounts-google

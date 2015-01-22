@@ -1,6 +1,54 @@
 card-table
 ==========
 
+BUILDING CLIENT: 
+
+- Install Yeoman
+sudo -H npm install -g yo
+
+- Install Bower
+sudo -H npm install -g bower
+
+- Install Compass
+http://compass-style.org/install/
+
+- Install Grunt to project
+npm install grunt
+
+- Install npm packages
+sudo -H npm insall
+
+- Install bower packages
+bower install
+
+- Link local bower package for Prizm client SDK (prizm-client)
+
+- Link local bower package for Prizm Game JS Toolkit (prizm-js-toolkit)
+
+
+BUILDING SERVER: 
+- Install Meteor
+https://www.meteor.com/install
+curl https://install.meteor.com/ | sh
+
+- Link Prizm server SDK as Meteor package
+mrt link-package ~/server-sdk/
+meteor add prizm:astral-server
+
+
+
+
+
+
+
+ITERATION PROCESS:
+- Run game server
+cd 
+meteor
+
+- Build client with livereload server
+grunt serve
+
 
 Development Environment:
 
@@ -16,8 +64,10 @@ Development Environment:
 - 
 
 
-Flow
-====
+
+
+User Flow
+=========
 --- SETUP ---
 Desktop:
 - ANNOUNCER: Login with Google
