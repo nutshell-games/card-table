@@ -70,7 +70,7 @@ module.exports = function (grunt) {
         //tasks: ['newer:copy:app', 'newer:jshint:all']
         files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js',
         // local bower packages under development
-        '<%= yeoman.app %>/lib/prizm-client/package.js','<%= yeoman.app %>/lib/prizm-js-toolkit/**/*.js'],
+        '<%= yeoman.app %>/lib/prizm-client/javascript/**/*.js','<%= yeoman.app %>/lib/prizm-js-toolkit/**/*.js'],
         tasks: ['newer:copy:app']
       },
       compass: {

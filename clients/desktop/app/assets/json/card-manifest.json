@@ -55,18 +55,18 @@
         "A-s":"ace_of_spades.png"
 	},
 	"cards": [
-		["back-default","2-c"],
-		["back-default","3-c"],
-		["back-default","4-c"],
-		["back-default","5-c"],
-		["back-default","6-c"],
-		["back-default","7-c"],
-		["back-default","8-c"],
-		["back-default","9-c"],
-		["back-default","10-c"],
-		["back-default","J-c"],
-		["back-default","Q-c"],
-		["back-default","K-c"],
-		["back-default","A-c"]
+		{ "tag":"c2","data": {"value":2,"suit":"c"},"textures":["back-default","2-c"]},
+		{ "tag":"c3","data": {"value":3,"suit":"c"},"textures":["back-default","3-c"]},
+		{ "tag":"c4","data": {"value":4,"suit":"c"},"textures":["back-default","4-c"]},
+		{ "tag":"c5","data": {"value":5,"suit":"c"},"textures":["back-default","5-c"]},
+		{ "tag":"c6","data": {"value":6,"suit":"c"},"textures":["back-default","6-c"]},
+		{ "tag":"c7","data": {"value":7,"suit":"c"},"textures":["back-default","7-c"]},
+		{ "tag":"c8","data": {"value":8,"suit":"c"},"textures":["back-default","8-c"]},
+		{ "tag":"c9","data": {"value":9,"suit":"c"},"textures":["back-default","9-c"]},
+		{ "tag":"c10","data": {"value":10,"suit":"c"},"textures":["back-default","10-c"]},
+		{ "tag":"c11","data": {"value":11,"suit":"c"},"textures":["back-default","J-c"]},
+		{ "tag":"c12","data": {"value":12,"suit":"c"},"textures":["back-default","Q-c"]},
+		{ "tag":"c13","data": {"value":13,"suit":"c"},"textures":["back-default","K-c"]},
+		{ "tag":"c1","data": {"value":1,"suit":"c"},"textures":["back-default","A-c"]}
 	]
 }

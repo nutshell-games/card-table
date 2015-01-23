@@ -17,6 +17,17 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+
+  Meteor.methods({
+    createNode: function(attributes){
+
+      Nodes.insert(attributes);
+
+    }
+  });
+
+  Nodes = new Mongo.Collection('nodes');
+
   Meteor.startup(function () {
     // code to run on server at startup
     Accounts.loginServiceConfiguration.remove({

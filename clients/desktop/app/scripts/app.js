@@ -26,6 +26,11 @@ angular.module('HoloDeck', ['ionic', 'config', 'HoloDeck.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
+  .state('gameboard', {
+    url: '/gameboard',
+    templateUrl: 'templates/gameboard.html',
+    controller: 'LauncherCtrl'
+  })
   .state('intro', {
     url: '/',
     templateUrl: 'templates/intro.html',
@@ -42,6 +47,6 @@ angular.module('HoloDeck', ['ionic', 'config', 'HoloDeck.controllers'])
     controller: 'MainCtrl'
   });
 
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/gameboard');
 
 });

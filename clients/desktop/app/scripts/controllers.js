@@ -1,9 +1,32 @@
 'use strict';
 angular.module('HoloDeck.controllers', [])
 
+.controller('LauncherCtrl', function($scope, $state) {
+ 
+  $scope.startGame = function(){
+    if (screenfull.enabled) {
+        screenfull.request();
+    }
+
+    $('#gameLauncher').hide();
+
+    GameWorld.loadBatch('assets/json/card-manifest.json',function(){
+      GameWorld.render($('#gameView').get(0));
+
+      var manifest = ["c2","c3","c4","c5"];
+      GameWorld.generateCards(manifest);
+    },false);
+
+    
+  }
+})
+
 .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
  
   $scope.startGame = function(){
+    if (screenfull.enabled) {
+        screenfull.request();
+    }
     GameWorld.render($('#gameView').get(0));
   }
 
