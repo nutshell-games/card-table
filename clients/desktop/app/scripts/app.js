@@ -17,10 +17,10 @@ angular.module('HoloDeck', ['ionic', 'config', 'HoloDeck.controllers'])
     }
   });
 
-  Astral.onLogin(function(userId){
-    console.log("logged in",userId);
-    $state.go('main');
-  })
+  // Astral.onLogin(function(userId){
+  //   console.log("logged in",userId);
+  //   $state.go('main');
+  // })
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
