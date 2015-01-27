@@ -33,52 +33,72 @@ SmartTouch.prototype = {
   }
 };
 
-SmartTouchClient = {
 
-  delegate: null,
-  buffer: "",
-  touches: {},
+SmartTouchClient = function(){
+  this.delegate = null;
+  buffer = "";
+  touches = {};
+};
+
+SmartTouchClient.prototype = {
+
+  configureLayout: function(data){
+    console.log("configureLayout",data);
+  },
+
+  parseBundle: function(data){
+    console.log("parseBundle",data);
+  },
 
   bindToServer: function(host,port,options) {
     var self = this;
 
-    if (!options) {
-      // standard socket options
-      options = {
-        encoding: "utf-8",
-        timeout: 300,
-        noDelay: true, // disable/enable Nagle algorithm
-        keepAlive: false, //default is false
-        initialDelay: 0 // for keepAlive. default is 0
-      }
-    }
+    this.websocketClient = new WebSocketClient();
 
-    var net = new WebTCP('localhost', 9999);
-
-    var socket = net.createSocket(host, port);
-
-    // On connection callback
-    socket.on('connect', function(){
-      console.log('connected');
-    })
-
-    // This gets called every time new data for this socket is received
-    // socket.on('data', function(data) {
-    //   console.log("received: " + data);
-
-    //   if (!self.proceedToParseEventData(data)) return;
-
-    //   self.parseData(data);
-    //   self.fireEvents();
-    // });
-
-    socket.on('end', function(data) {
-      console.log("socket is closed ");
+    this.websocketClient.mapMessageHandlers({
+      parseBundle: this.parseBundle.bind(this),
+      configureLayout: this.configureLayout.bind(this)
     });
 
-    // Open connection to SmartTouch server
-    // Send data to the server
-    socket.write("open"); 
+    this.websocketClient.connect(host,port);
+
+    // if (!options) {
+    //   // standard socket options
+    //   options = {
+    //     encoding: "utf-8",
+    //     timeout: 300,
+    //     noDelay: true, // disable/enable Nagle algorithm
+    //     keepAlive: false, //default is false
+    //     initialDelay: 0 // for keepAlive. default is 0
+    //   }
+    // }
+
+    // var net = new WebTCP('localhost', 9999);
+
+    // var socket = net.createSocket(host, port);
+
+    // // On connection callback
+    // socket.on('connect', function(){
+    //   console.log('connected');
+    // })
+
+    // // This gets called every time new data for this socket is received
+    // // socket.on('data', function(data) {
+    // //   console.log("received: " + data);
+
+    // //   if (!self.proceedToParseEventData(data)) return;
+
+    // //   self.parseData(data);
+    // //   self.fireEvents();
+    // // });
+
+    // socket.on('end', function(data) {
+    //   console.log("socket is closed ");
+    // });
+
+    // // Open connection to SmartTouch server
+    // // Send data to the server
+    // socket.write("open"); 
   },
 
   touchesFromBuffer: function(data) {
@@ -262,6 +282,10 @@ SmartTouchDelegate = {
 var smartTouchHost = "10.0.1.23"; // NETWORK: Apple Network Base
 //var smartTouchHost = "192.168.2.40"; // NETWORK: Mom
 //var smartTouchHost = "192.168.1.123"; // NETWORK: LinkSys
-var smartTouchPort = 1337;
 
-SmartTouchClient.bindToServer(smartTouchHost,smartTouchPort);
+//var smartTouchPort = 1337;
+var smartTouchPort = 8080;
+
+var smartTouchClient = new SmartTouchClient();
+
+smartTouchClient.bindToServer(smartTouchHost,smartTouchPort);

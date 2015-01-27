@@ -14,14 +14,11 @@
  *  limitations under the License.
  ***********************************************************************/
 
-function SmartTouchClient(canvasId) {
+function WebSocketClient() {
     //this.initCanvas(canvasId);
     
     // Define accepted commands
     this.messageHandlers = {
-        configureLayout: this.configureLayout.bind(this),
-        parseBundle: this.parseBundle.bind(this)
-
         // initCommands: this.initCommands.bind(this),
         // drawLine: this.drawLine.bind(this),
         // clear: this.clear.bind(this)
@@ -45,7 +42,15 @@ function SmartTouchClient(canvasId) {
     // };
 };
 
-SmartTouchClient.prototype.connect = function(host, port) {
+WebSocketClient.prototype.mapMessageHandlers = function(map){
+    console.log("mapMessageHandlers",map);
+
+    _.forIn(map,function(handler,message){
+        this.messageHandlers[message] = handler;
+    },this);
+};
+
+WebSocketClient.prototype.connect = function(host, port) {
     var url = "ws://"+host+":"+port;
     //var url = "ws://" + document.URL.substr(7).split('/')[0];
     
@@ -60,7 +65,7 @@ SmartTouchClient.prototype.connect = function(host, port) {
     this.addWindowEventListeners();
 };
 
-SmartTouchClient.prototype.handleWebsocketMessage = function(message) {
+WebSocketClient.prototype.handleWebsocketMessage = function(message) {
     try {
         var command = JSON.parse(message.data);
     }
@@ -71,11 +76,11 @@ SmartTouchClient.prototype.handleWebsocketMessage = function(message) {
     }
 };
 
-SmartTouchClient.prototype.handleWebsocketClose = function() {
+WebSocketClient.prototype.handleWebsocketClose = function() {
     alert("WebSocket Connection Closed.");
 };
 
-SmartTouchClient.prototype.dispatchCommand = function(command) {
+WebSocketClient.prototype.dispatchCommand = function(command) {
     // Do we have a handler function for this command?
     var handler = this.messageHandlers[command.msg];
     if (typeof(handler) === 'function') {
@@ -84,7 +89,7 @@ SmartTouchClient.prototype.dispatchCommand = function(command) {
     }
 };
 
-// SmartTouchClient.prototype.initCommands = function(commandList) {
+// WebSocketClient.prototype.initCommands = function(commandList) {
 //     /* Upon connection, the contents of the whiteboard
 //        are drawn by replaying all commands since the
 //        last time it was cleared */
@@ -93,11 +98,11 @@ SmartTouchClient.prototype.dispatchCommand = function(command) {
 //     }.bind(this));
 // };
 
-// SmartTouchClient.prototype.sendClear = function() {
+// WebSocketClient.prototype.sendClear = function() {
 //     this.socket.send(JSON.stringify({ msg: 'clear' }));
 // };
 
-// SmartTouchClient.prototype.setColor = function(r,g,b) {
+// WebSocketClient.prototype.setColor = function(r,g,b) {
 //     this.color = {
 //         r: r,
 //         g: g,
@@ -105,7 +110,7 @@ SmartTouchClient.prototype.dispatchCommand = function(command) {
 //     };
 // };
 
-// SmartTouchClient.prototype.drawLine = function(data) {
+// WebSocketClient.prototype.drawLine = function(data) {
 //     // Set the color
 //     var color = data.color;
 //     this.ctx.strokeStyle = 'rgb(' + color.r + "," + color.g + "," + color.b +')';
@@ -122,25 +127,25 @@ SmartTouchClient.prototype.dispatchCommand = function(command) {
 //     this.ctx.stroke();
 // };
 
-// SmartTouchClient.prototype.clear = function() {
+// WebSocketClient.prototype.clear = function() {
 //     this.canvas.width = this.canvas.width;
 // };
 
-SmartTouchClient.prototype.addWindowEventListeners = function(){
+WebSocketClient.prototype.addWindowEventListeners = function(){
 
 };
 
-SmartTouchClient.prototype.handleMouseDown = function(event) {
+WebSocketClient.prototype.handleMouseDown = function(event) {
     this.mouseDown = true;
 	this.lastPoint = this.resolveMousePosition(event);
 };
 
-SmartTouchClient.prototype.handleMouseUp = function(event) {
+WebSocketClient.prototype.handleMouseUp = function(event) {
     this.mouseDown = false;
     this.lastPoint = null;
 };
 
-SmartTouchClient.prototype.handleMouseMove = function(event) {
+WebSocketClient.prototype.handleMouseMove = function(event) {
     if (!this.mouseDown) { return; }
 
     var currentPoint = this.resolveMousePosition(event);
@@ -164,14 +169,14 @@ SmartTouchClient.prototype.handleMouseMove = function(event) {
     this.lastPoint = currentPoint;
 };
 
-SmartTouchClient.prototype.initCanvas = function(canvasId) {
+WebSocketClient.prototype.initCanvas = function(canvasId) {
     this.canvasId = canvasId;
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext('2d');
     this.initCanvasOffset();
 };
 
-SmartTouchClient.prototype.initCanvasOffset = function() {
+WebSocketClient.prototype.initCanvasOffset = function() {
     this.offsetX = this.offsetY = 0;
     var element = this.canvas;
     if (element.offsetParent) {
@@ -183,7 +188,7 @@ SmartTouchClient.prototype.initCanvasOffset = function() {
     }
 };
 
-SmartTouchClient.prototype.addCanvasEventListeners = function() {
+WebSocketClient.prototype.addCanvasEventListeners = function() {
     this.canvas.addEventListener(
         'mousedown', this.handleMouseDown.bind(this), false);
     
@@ -194,7 +199,7 @@ SmartTouchClient.prototype.addCanvasEventListeners = function() {
         'mousemove', this.handleMouseMove.bind(this), false);
 };
 
-SmartTouchClient.prototype.resolveMousePosition = function(event) {
+WebSocketClient.prototype.resolveMousePosition = function(event) {
     var x, y;
 	if (event.offsetX) {
 		x = event.offsetX;
