@@ -57,6 +57,9 @@ module.exports = function (grunt) {
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
+      // options: {
+      //     livereload: true
+      // },
       bower: {
         files: ['bower.json'],
         tasks: ['wiredep', 'newer:copy:app']
@@ -70,7 +73,8 @@ module.exports = function (grunt) {
         //tasks: ['newer:copy:app', 'newer:jshint:all']
         files: ['<%= yeoman.app %>/<%= yeoman.scripts %>/**/*.js',
         // local bower packages under development
-        '<%= yeoman.app %>/lib/prizm-client/javascript/**/*.js','<%= yeoman.app %>/lib/prizm-js-toolkit/**/*.js'],
+        '<%= yeoman.app %>/lib/prizm-client/**/*.js',
+        '<%= yeoman.app %>/lib/prizm-js-toolkit/**/*.js'],
         tasks: ['newer:copy:app']
       },
       compass: {
