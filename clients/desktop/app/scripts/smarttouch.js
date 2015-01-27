@@ -47,7 +47,19 @@ SmartTouchClient.prototype = {
   },
 
   parseBundle: function(data){
-    console.log("parseBundle",data);
+    //console.log("parseBundle",data);
+
+    if (data.points.length!=1 || GameWorld.nodes.length==0) return;
+
+    var point = data.points[0];
+    var index = GameWorld.nodes.length-1;
+
+    setTimeout(function(){
+      GameWorld.nodes[index].sprites[1].position.x = point.x;
+      GameWorld.nodes[index].sprites[1].position.y = point.y;
+    },1);
+    
+
   },
 
   bindToServer: function(host,port,options) {
