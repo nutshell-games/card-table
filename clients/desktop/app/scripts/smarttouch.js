@@ -1,3 +1,25 @@
+// Poll SparkCore RPC for RFID presence 
+// https://api.spark.io/v1/devices/54ff6d066672524815271167/rfid?access_token=634135148894853f8bad267aab7c328b473ee6bd
+
+$('body').css('cursor', 'none');
+
+var interval;
+
+function startRFIDPolling() {
+  timer = setInterval(function(){
+    $.ajax({
+      url: "https://api.spark.io/v1/devices/54ff6d066672524815271167/UID?access_token=634135148894853f8bad267aab7c328b473ee6bd"
+    })
+    .done(function( data ) {
+      console.log(data);
+    });
+  },1000);
+}
+
+function stopRFIDPolling(){
+  clearInterval(timer);
+}
+
 
 
 SmartTouch = function(id, x, y){
@@ -49,15 +71,29 @@ SmartTouchClient.prototype = {
   parseBundle: function(data){
     //console.log("parseBundle",data);
 
-    if (data.points.length!=1 || GameWorld.nodes.length==0) return;
+    //if (data.points.length!=1 || GameWorld.nodes.length==0) return;
+    if (data.length==0 || GameWorld.nodes.length==0) return;
 
-    var point = data.points[0];
-    var index = GameWorld.nodes.length-1;
+    // var point = data.points[0];
+    // var index = GameWorld.nodes.length-1;
+
+    // setTimeout(function(){
+    //   GameWorld.nodes[index].sprites[1].position.x = point.x;
+    //   GameWorld.nodes[index].sprites[1].position.y = point.y;
+    // },1);
 
     setTimeout(function(){
-      GameWorld.nodes[index].sprites[1].position.x = point.x;
-      GameWorld.nodes[index].sprites[1].position.y = point.y;
+      _.each(data,function(point,index){
+        console.log(point,index,GameWorld.nodes[index]);
+        GameWorld.nodes[index].sprites[1].position.x = point[1];
+        GameWorld.nodes[index].sprites[1].position.y = point[2];
+        GameWorld.nodes[index].sprites[0].position.x = point[1];
+        GameWorld.nodes[index].sprites[0].position.y = point[2];
+      
+      })
     },1);
+
+    
     
 
   },
@@ -69,7 +105,8 @@ SmartTouchClient.prototype = {
 
     this.websocketClient.mapMessageHandlers({
       parseBundle: this.parseBundle.bind(this),
-      configureLayout: this.configureLayout.bind(this)
+      configureLayout: this.configureLayout.bind(this),
+      rfidPresent: this.rfidPresent.bind(this)
     });
 
     this.websocketClient.connect(host,port);
@@ -113,6 +150,31 @@ SmartTouchClient.prototype = {
     // socket.write("open"); 
   },
 
+  rfidPresent: function(data) {
+
+    console.log(data)
+    // ignore carriage return 
+    if (data=='\\r') {
+      console.log('empty RFID data');
+      return;
+    }
+
+    // get unique index
+    if (!_.contains(GameWorld.colors,data)) {
+      GameWorld.colors.push(data);
+      console.log('new color:'+data);
+    }
+
+    var colorIndex = GameWorld.colors.indexOf(data);
+
+    console.log(GameWorld.colors);
+    console.log('colorIndex: '+colorIndex);
+
+    if (GameWorld.stage) {
+      GameWorld.changeBackgroundColor(colorIndex);
+    }
+  },
+
   touchesFromBuffer: function(data) {
 
     this.buffer += data;
@@ -126,7 +188,8 @@ SmartTouchClient.prototype = {
 
     if (endOfPacket) {
       var packet = JSON.parse(this.buffer);
-      return packet.points;
+      //return packet.points;
+      return packet;
     } else {
       return false;
     }
@@ -172,7 +235,7 @@ SmartTouchClient.prototype = {
 
       // if id in touches, update touch
       // keys are strings
-      if (_.contains(_.keys(this.touches),touch.id+'') ) {
+      if (_.contains(_.keys(this.touches),touch.id+'')) {
         console.log('UPDATE TOUCH');
         this.updateTouch(touch.id, touch.x, touch.y);
       // else new touch
@@ -291,9 +354,10 @@ SmartTouchDelegate = {
 
 
 // TODO automatically discover and cache SmartTouch server IP address...???
-var smartTouchHost = "10.0.1.23"; // NETWORK: Apple Network Base
+//var smartTouchHost = "10.0.1.23"; // NETWORK: Apple Network Base
 //var smartTouchHost = "192.168.2.40"; // NETWORK: Mom
 //var smartTouchHost = "192.168.1.123"; // NETWORK: LinkSys
+var smartTouchHost = "127.0.0.1";
 
 //var smartTouchPort = 1337;
 var smartTouchPort = 8080;

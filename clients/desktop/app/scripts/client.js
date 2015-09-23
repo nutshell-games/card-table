@@ -66,6 +66,7 @@ WebSocketClient.prototype.connect = function(host, port) {
 };
 
 WebSocketClient.prototype.handleWebsocketMessage = function(message) {
+    console.log(message);
     try {
         var command = JSON.parse(message.data);
     }

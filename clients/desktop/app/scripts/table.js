@@ -60,6 +60,7 @@ function Card(data, textureKeys){
 Card.prototype = {
 
     render: function(x,y,gameWorld){
+
         _.each(this.sprites,function(sprite){
 
                     // move the sprite t the center of the screen
@@ -67,8 +68,10 @@ Card.prototype = {
             sprite.position.y = y;
 
             gameWorld.stage.addChild(sprite);
-            gameWorld.nodes.push(this);
-        },this)
+            
+        },this);
+        
+        gameWorld.nodes.push(this);
     },
 
     // bind to reactive document
@@ -83,6 +86,8 @@ GameWorld = {
     textures: {},
     nodes: [],
 
+    // cache RFID UIDs as colors
+    colors: [],
 
     // string array of template tags
     generateCards: function(manifest){
@@ -191,6 +196,14 @@ GameWorld = {
         this.stage.addChild(bunny);
 
     },
+    changeBackgroundColor: function(colorIndex) {
+
+        var colors = [0x66FF99,0xFF0000,0x00FF00,0x0000FF,0x000000];
+
+        this.stage.setBackgroundColor(colors[colorIndex]);
+
+    },
+
     render: function(element) {
         console.log(element);
 

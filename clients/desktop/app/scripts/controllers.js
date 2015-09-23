@@ -13,7 +13,7 @@ angular.module('HoloDeck.controllers', [])
     GameWorld.loadBatch('assets/json/card-manifest.json',function(){
       GameWorld.render($('#gameView').get(0));
 
-      var manifest = ["c2","c3","c4","c5"];
+      var manifest = ["c2","c3","c4","c5","c1"];
       GameWorld.generateCards(manifest);
     },false);
 
